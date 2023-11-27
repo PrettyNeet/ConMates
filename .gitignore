@@ -1,0 +1,27 @@
+# Ignore token.txt
+token.txt
+
+# Ignore Python virtual environment folders
+venv/
+__pycache__/
+
+# Ignore IDE or editor-specific files and directories
+.vscode/
+.idea/
+*.pyc
+
+# Ignore system-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore log and temporary files
+*.log
+*.tmp
+
+# Ignore environment-specific configuration files
+.env
+.env.local
+.env.dev
+
+# Ignore Node.js modules
+node_modules/
