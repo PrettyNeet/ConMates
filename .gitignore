@@ -2,7 +2,7 @@
 token.txt
 
 # Ignore Python virtual environment folders
-venv/
+.venv/
 __pycache__/
 
 # Ignore IDE or editor-specific files and directories
