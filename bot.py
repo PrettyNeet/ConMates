@@ -38,6 +38,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 # Command: /help
+# this function is used to show the available commands.
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         "<b>Available Commands:</b>\n"
@@ -54,6 +55,7 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 # Command: /currency
+# this function is used to set the currency symbol and view the current currency symbol. it uses a global variable to store the currency symbol.
 async def currency_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     global CURRENCY_SYMBOL
     args = context.args
@@ -68,6 +70,7 @@ async def currency_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 # Command: /setroom
+# this function is used to set the room information and store it as a global variable. 
 async def setroom_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         "Please enter the room details in the format:\n"
@@ -75,6 +78,7 @@ async def setroom_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
     return SET_ROOM_INFO  # Proceed to the next state
 
+# this function receives the room information from the user and stores it as a global variable.
 async def receive_room_info(update: Update, context: ContextTypes.DEFAULT_TYPE):
     room_details_text = update.message.text.strip()
     parts = [part.strip() for part in room_details_text.split(',')]
@@ -91,9 +95,10 @@ async def receive_room_info(update: Update, context: ContextTypes.DEFAULT_TYPE):
     }
     context.chat_data['room_info'] = room_info
     await update.message.reply_text("Room information saved.")
-    return ConversationHandler.END
+    return ConversationHandler.END 
 
 # Command: /getroom
+# this function is used to get the room information from the global variable and send it back to the user. currently stored in local memory. TODO - use database.
 async def getroom_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     room_info = context.chat_data.get('room_info')
     if room_info:
@@ -113,6 +118,7 @@ async def getroom_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("No room information set.")
 
 # Command: /setroommates
+# this function is used to set the roommates for the user. currently stored in local memory. TODO - use database.
 async def setroommates_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         "Please enter the usernames or names of the roommates, separated by commas."
@@ -127,6 +133,7 @@ async def receive_roommates(update: Update, context: ContextTypes.DEFAULT_TYPE):
     return ConversationHandler.END
 
 # Command: /getroommates
+# this function is used to get the roommates for the user. currently stored in local memory. TODO - use database.
 async def getroommates_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     roommates = context.chat_data.get('roommates')
     if roommates:
@@ -139,6 +146,7 @@ async def getroommates_command(update: Update, context: ContextTypes.DEFAULT_TYP
         await update.message.reply_text("No roommates set.")
 
 # Command: /split
+# this function is used to split the bill. currently stored in local memory. TODO - use database.
 async def split_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     args = context.args
     if len(args) < 2:
@@ -265,6 +273,7 @@ async def split_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("Please enter valid numbers.")
 
 # Callback handler for button presses
+# this function is called when the button is pressed. It appends the user ID to the message
 async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer()
@@ -304,11 +313,13 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await query.answer("You have already acknowledged this message.", show_alert=True)
 
 # Command: /remind
+#this command sends a "reminder" message. This will need to be updated to reference the room, and user ID associated with the room split.
 async def remind_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         "Reminder: Please settle your room costs!"
     )
 
+# main function, runs the builder for the telegram bot
 def main():
     app = ApplicationBuilder().token(BOT_TOKEN).build()
 

@@ -5,6 +5,9 @@ A Telegram bot to help split room costs among group members during events or con
 ## Features
 
 - **Split Costs**: Calculate room cost splits based on the number of roommates and nights stayed.
+- **Room Information**: Set and display room details like hotel name, dates, beds, and room type.
+- **Roommates List**: Set and retrieve a list of roommates.
+- **Acknowledgments**: Use inline buttons to acknowledge split messages, tracking who has seen the split.
 - **Currency Support**: Set and display currency symbols (e.g., $, CAD, USD).
 - **Reminders**: Send reminders to group members to settle expenses.
 
@@ -70,18 +73,24 @@ A Telegram bot to help split room costs among group members during events or con
 - `/start`: Start the bot and get a welcome message.
 - `/help`: List all available commands.
 - `/split`: Calculate the split. Usage:
-
-```bash
-/split <total_cost> <number_of_roommates> [nights_stayed...]
-Equal split example:
-/split 1000 4
-
-Nights stayed example:
-/split 1000 4 3 2 1 4
-```
-
+  - `/split <total_cost> <number_of_roommates> [names...] [nights_stayed...]`
+  - Equal split without names example:
+    `/split 1000 4`
+  - Equal Split With Names
+    `/split 1000 4 @Alice @Bob @Charlie @Dave`
+  - Split Based on Nights Stayed With Names:
+    `/split 1000 3 @Alice @Bob @Charlie 2 3 1`
+  - Notes:
+    - Order Matters: After <number_of_roommates>, provide names (if any), followed by nights stayed (if splitting by nights).
+    - Names: Can be any text or @username
 - `/currency`: Set or view the currency symbol.
 - `/remind`: Send a reminder message.
+- `/setroom`: Set room information.
+  - The bot will prompt you to enter the room details in the format:
+    `Hotel Name | Dates | Beds | Room Type`
+- `/getroom`: Retrieve the current room information.
+- `/setroommates`: Set the list of roommates.
+  - The bot will prompt you to enter the roommates' names or usernames, separated by commas.
 
 ## Contribution Guidelines
 
@@ -111,6 +120,7 @@ Nights stayed example:
 
 ## Project Structure Overview
 
+```bash
     telegram-room-split-bot/
     ├── bot.py
     ├── .env
@@ -120,3 +130,4 @@ Nights stayed example:
     ├── README.md
     ├── requirements.txt
     └── venv/
+```
